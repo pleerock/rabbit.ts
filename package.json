@@ -1,0 +1,47 @@
+{
+  "name": "rabbit.ts",
+  "version": "0.0.1",
+  "description": "Wrapper over rabbit.js library that provides some extra convinent functionality to work with rabbit.js in Typescript",
+  "license": "Apache-2.0",
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Umed Khudoiberdiev",
+    "email": "zarrhost@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PLEEROCK/rabbit.ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PLEEROCK/rabbit.ts/issues"
+  },
+  "tags": [
+    "express",
+    "typescript",
+    "rabbit.js"
+  ],
+  "typings": "./rabbit.ts.d.ts",
+  "typescript": {
+    "definition": "rabbit.ts.d.ts"
+  },
+  "dependencies": {
+    "fs": "0.0.2",
+    "path": "^0.11.14",
+    "rabbit.js": "^0.4.4"
+  },
+  "devDependencies": {
+    "del": "^2.0.2",
+    "dts-generator": "^1.5.0",
+    "gulp": "^3.9.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-shell": "^0.5.0",
+    "gulp-typescript": "^2.9.0",
+    "run-sequence": "^1.1.4",
+    "tsd": "^0.6.4",
+    "typescript": "^1.6.2",
+    "typedi": ">=0.0.4"
+  },
+  "scripts": {
+    "postversion": "./node_modules/.bin/gulp package"
+  }
+}
