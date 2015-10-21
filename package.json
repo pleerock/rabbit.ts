@@ -1,6 +1,6 @@
 {
   "name": "rabbit.ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wrapper over rabbit.js library that provides some extra convinent functionality to work with rabbit.js in Typescript",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",

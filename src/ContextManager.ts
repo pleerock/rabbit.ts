@@ -83,22 +83,24 @@ export class ContextManager {
         });
     }
 
-    closeContexts(): Promise<void> {
-        let closePromises = this.connections.map(connection => {
-            let stopPromises = this.terminateListeners(connection);
-            let closePromise = new Promise<void>((ok, fail) => {
-                connection.context.close((err: any, result: any) => {
-                    if (err) {
-                        fail(err);
-                        return;
-                    }
+    closeContext(contextName: string = 'default'): Promise<void> {
+        let connection = this.getConnection(contextName);
+        let stopPromises = this.terminateListeners(connection);
+        let closePromise = new Promise<void>((ok, fail) => {
+            connection.context.close((err: any, result: any) => {
+                if (err) {
+                    fail(err);
+                    return;
+                }
 
-                    ok(result);
-                });
+                ok(result);
             });
-            return Promise.all([stopPromises, closePromise]);
         });
-        return Promise.all(closePromises).then(_ => {});
+        return Promise.all([stopPromises, closePromise]).then(_ => {});
+    }
+
+    closeContexts(): Promise<void> {
+        return Promise.all(this.connections.map(connection => this.closeContext(connection.name))).then(_ => {});
     }
 
     registerListener(listener: RabbitLifecycleListenerInterface): Promise<void>;
