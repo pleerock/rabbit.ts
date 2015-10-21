@@ -1,6 +1,6 @@
 # rabbit.ts
 
-Provides convenient functions to work with [rabbit.js][1] library.
+Provides convenient functions to work with [rabbit.js](http://www.squaremobius.net/rabbit.js/) library.
 
 ## Usage
 
