@@ -75,10 +75,7 @@ export class ContextManager {
         let connection: Connection = { name: name, context: rabbit.createContext(options.url), listeners: [] };
         this.connections.push(connection);
         return new Promise<void>((ok, fail) => {
-            connection.context.on('ready', () => {
-                this.loadListenersFromMetadataStorage(connection);
-                return this.startListeners(connection).then(() => ok());
-            });
+            connection.context.on('ready', ok);
             connection.context.on('error', fail);
         });
     }
@@ -96,7 +93,7 @@ export class ContextManager {
                 ok(result);
             });
         });
-        return Promise.all([stopPromises, closePromise]).then(_ => {});
+        return Promise.all(stopPromises.concat(closePromise)).then(_ => {});
     }
 
     closeContexts(): Promise<void> {
@@ -134,6 +131,13 @@ export class ContextManager {
         }, undefined);
     }
 
+    loadListeners(): Promise<void> {
+        return Promise.all(this.connections.map(connection => {
+            this.loadListenersFromMetadataStorage(connection);
+            return Promise.all(this.startListeners(connection));
+        })).then(() => { });
+    }
+
     // -------------------------------------------------------------------------
     // Private Methods
     // -------------------------------------------------------------------------
@@ -152,12 +156,14 @@ export class ContextManager {
             .forEach(metadata => connection.listeners.push(this.obtainListener(metadata.object)));
     }
 
-    private startListeners(connection: Connection): Promise<any> {
-        return Promise.all(connection.listeners.map(listener => listener.onStart(connection.context)));
+    private startListeners(connection: Connection): Promise<void>[] {
+        return connection.listeners.map(listener => {
+            return listener.onStart(connection.context)
+        });
     }
 
-    private terminateListeners(connection: Connection): Promise<any> {
-        return Promise.all(connection.listeners.map(listener => listener.onTerminate(connection.context)));
+    private terminateListeners(connection: Connection): Promise<void>[] {
+        return connection.listeners.map(listener => listener.onTerminate(connection.context));
     }
     
     private obtainListener(constructor: Function): RabbitLifecycleListenerInterface {

@@ -15,17 +15,17 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
         this.helper = new RabbitHelper();
     }
 
-    onStart(context: Context): Promise<any> {
+    onStart(context: Context): Promise<void> {
         this.context = context;
         this.subscribeSocket = this.context.socket<SubSocket>('SUBSCRIBE');
-        return Promise.all(this.subscribeAll());
+        return Promise.all(this.subscribeAll()).then(() => {});
     }
 
-    onTerminate(context: Context): Promise<any> {
+    onTerminate(context: Context): Promise<void> {
         if (this.subscribeSocket)
             this.subscribeSocket.close();
 
-        return Promise.resolve();
+        return Promise.resolve<void>();
     }
 
     private subscribeAll(): Promise<void>[] {

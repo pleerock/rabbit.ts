@@ -9,6 +9,7 @@ let contextManager = Container.get<ContextManager>(ContextManager);
 contextManager.container = Container;
 contextManager
     .createContext({ url: 'amqp://localhost' })
+    .then(result => contextManager.loadListeners())
     .then(result => {
         let UserRepository = require('./UserRepository').UserRepository;
         let repository: any = Container.get(UserRepository);

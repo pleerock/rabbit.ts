@@ -36,8 +36,8 @@ export class RabbitHelper {
      * Experimental. Makes a subscription to the given queue on the given socket. Executes callback when
      * data is received. Performs json parsing of the received data.
      */
-    quickSubscribe(socket: SubSocket, queueName: string, callback?: (data: any) => void): Promise<any> {
-        return new Promise<any>((ok, fail) => {
+    quickSubscribe(socket: SubSocket, queueName: string, callback?: (data: any) => void): Promise<void> {
+        return new Promise<void>((ok, fail) => {
             socket.connect(queueName, () => {
                 socket.on('data', (data: any) => {
                     data = this.convert(data);
