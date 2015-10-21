@@ -83,15 +83,11 @@ export class ContextManager {
     closeContext(contextName: string = 'default'): Promise<void> {
         let connection = this.getConnection(contextName);
         let stopPromises = this.terminateListeners(connection);
-        let closePromise = new Promise<void>((ok, fail) => {
-            connection.context.close((err: any, result: any) => {
-                if (err) {
-                    fail(err);
-                    return;
-                }
-
-                ok(result);
-            });
+        let closePromise = new Promise<void>(ok => {
+            connection.context.close(() => {});
+            ok();
+            // since rabbit.js library does not validate close errors we cant wait for connection close and create
+            // a promise for it - because in the case if close fail we cant know about it and promise never be resolved
         });
         return Promise.all(stopPromises.concat(closePromise)).then(_ => {});
     }
@@ -157,9 +153,7 @@ export class ContextManager {
     }
 
     private startListeners(connection: Connection): Promise<void>[] {
-        return connection.listeners.map(listener => {
-            return listener.onStart(connection.context)
-        });
+        return connection.listeners.map(listener => listener.onStart(connection.context));
     }
 
     private terminateListeners(connection: Connection): Promise<void>[] {
