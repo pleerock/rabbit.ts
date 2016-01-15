@@ -1,7 +1,7 @@
 import {Context, SubSocket, PubSocket} from "rabbit.js";
 import {Resolve} from "typedi/Resolve";
 import {RabbitLifecycleListenerInterface} from "../../src/RabbitLifecycleListenerInterface";
-import {RabbitLifecycleListener} from "../../src/Annotations";
+import {RabbitLifecycleListener} from "../../src/Decorators";
 import {User} from "./User";
 import {RabbitHelper} from "../../src/RabbitHelper";
 

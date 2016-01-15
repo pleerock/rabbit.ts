@@ -17,14 +17,14 @@ export function RabbitContext(contextName?: string): Function {
         try {
             container = require('typedi/Container').Container;
         } catch (err) {
-            throw new Error('RabbitContext cannot be used because typedi extension is not installed.');
+            throw new Error('RabbitContext cannot be used because typedi package is not installed.');
         }
 
-        container.registerCustomParamHandler({
+        container.registerParamHandler({
             type: target,
             index: index,
             getValue: () => {
-                let connectionManager: ContextManager = container.get(ContextManager);
+                const connectionManager: ContextManager = container.get(ContextManager);
                 return connectionManager.getContext(contextName);
             }
         });

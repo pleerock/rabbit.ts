@@ -1,6 +1,6 @@
 {
   "name": "rabbit.ts",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Wrapper over rabbit.js library that provides some extra convinent functionality to work with rabbit.js in Typescript",
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
@@ -20,9 +20,8 @@
     "typescript",
     "rabbit.js"
   ],
-  "typings": "./rabbit.ts.d.ts",
   "typescript": {
-    "definition": "rabbit.ts.d.ts"
+    "definition": "index.d.ts"
   },
   "dependencies": {
     "fs": "0.0.2",
@@ -39,9 +38,6 @@
     "run-sequence": "^1.1.4",
     "tsd": "^0.6.4",
     "typescript": "^1.6.2",
-    "typedi": ">=0.0.4"
-  },
-  "scripts": {
-    "postversion": "./node_modules/.bin/gulp package"
+    "typedi": "~0.1.0"
   }
 }

@@ -1,6 +1,6 @@
 import {Context, SubSocket, PubSocket} from "rabbit.js";
 import {RabbitLifecycleListenerInterface} from "../../src/RabbitLifecycleListenerInterface";
-import {RabbitLifecycleListener} from "../../src/Annotations";
+import {RabbitLifecycleListener} from "../../src/Decorators";
 import {User} from "./User";
 
 @RabbitLifecycleListener()
