@@ -1,13 +1,13 @@
 import {defaultMetadataStorage} from "./MetadataStorage";
 import {ContextManager} from "./ContextManager";
 
-export function RabbitLifecycleListener(connectionName: string = 'default'): Function {
+export function RabbitLifecycleListener(connectionName: string = "default"): Function {
     return function(object: Function) {
         defaultMetadataStorage.addRabbitLifecycleListenerMetadata({
             connectionName: connectionName,
             object: object
         });
-    }
+    };
 }
 
 export function RabbitContext(contextName?: string): Function {
@@ -15,9 +15,9 @@ export function RabbitContext(contextName?: string): Function {
 
         let container: any;
         try {
-            container = require('typedi/Container').Container;
+            container = require("typedi/Container").Container;
         } catch (err) {
-            throw new Error('RabbitContext cannot be used because typedi package is not installed.');
+            throw new Error("RabbitContext cannot be used because typedi package is not installed.");
         }
 
         container.registerParamHandler({
@@ -29,5 +29,5 @@ export function RabbitContext(contextName?: string): Function {
             }
         });
 
-    }
+    };
 }

@@ -17,7 +17,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
 
     onStart(context: Context): Promise<void> {
         this.context = context;
-        this.subscribeSocket = this.context.socket<SubSocket>('SUBSCRIBE');
+        this.subscribeSocket = this.context.socket<SubSocket>("SUBSCRIBE");
         return Promise.all(this.subscribeAll()).then(() => {});
     }
 
@@ -30,8 +30,8 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
 
     private subscribeAll(): Promise<void>[] {
         return [
-            this.helper.quickSubscribe(this.subscribeSocket, 'user.create', function(user: User) {
-                console.log('User ' + user.name +' created');
+            this.helper.quickSubscribe(this.subscribeSocket, "user.create", function(user: User) {
+                console.log("User " + user.name + " created");
             })
         ];
     }

@@ -11,7 +11,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
 
     onStart(context: Context): Promise<void> {
         this.context = context;
-        this.subscribeSocket = this.context.socket<SubSocket>('SUBSCRIBE');
+        this.subscribeSocket = this.context.socket<SubSocket>("SUBSCRIBE");
         return Promise.all(this.subscribeAll()).then(() => { });
     }
 
@@ -23,7 +23,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
     }
 
     publish(queueName: string, object: any): Promise<void> {
-        let socket = this.context.socket<PubSocket>('PUBLISH');
+        let socket = this.context.socket<PubSocket>("PUBLISH");
         return new Promise<void>((ok, fail) => {
             socket.connect(queueName, (err: any) => {
                 if (err) {
@@ -31,7 +31,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
                     return;
                 }
 
-                socket.write(JSON.stringify(object), 'utf8');
+                socket.write(JSON.stringify(object), "utf8");
                 socket.close();
                 ok();
             });
@@ -40,8 +40,8 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
 
     private subscribeAll(): Promise<void>[] {
         return [
-            this.subscribe('user.create', function(user: User) {
-                console.log('User ' + user.name +' created');
+            this.subscribe("user.create", function(user: User) {
+                console.log("User " + user.name + " created");
             })
         ];
     }
@@ -49,7 +49,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
     private subscribe(queueName: string, callback: (data: any) => void): Promise<void> {
         return new Promise<void>((ok, fail) => {
             this.subscribeSocket.connect(queueName, () => {
-                this.subscribeSocket.on('data', (data: any) => callback(JSON.parse(data)));
+                this.subscribeSocket.on("data", (data: any) => callback(JSON.parse(data)));
                 ok();
             });
         });

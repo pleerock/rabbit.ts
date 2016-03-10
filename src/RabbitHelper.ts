@@ -14,7 +14,7 @@ export class RabbitHelper {
      * connection. Makes object stringification if data is an object.
      */
     quickPublish(context: Context, queueName: string, data: any): Promise<void> {
-        let socket = context.socket<PubSocket>('PUBLISH');
+        let socket = context.socket<PubSocket>("PUBLISH");
         return new Promise<void>((ok, fail) => {
             socket.connect(queueName, (err: any) => {
                 if (err) {
@@ -25,7 +25,7 @@ export class RabbitHelper {
                 if (data instanceof Object)
                     data = JSON.stringify(data);
 
-                socket.write(data, 'utf8');
+                socket.write(data, "utf8");
                 socket.close();
                 ok();
             });
@@ -39,7 +39,7 @@ export class RabbitHelper {
     quickSubscribe(socket: SubSocket, queueName: string, callback?: (data: any) => void): Promise<void> {
         return new Promise<void>((ok, fail) => {
             socket.connect(queueName, () => {
-                socket.on('data', (data: any) => {
+                socket.on("data", (data: any) => {
                     data = this.convert(data);
                     callback(data);
                 });
