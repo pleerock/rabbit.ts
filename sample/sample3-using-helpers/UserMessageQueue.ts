@@ -25,7 +25,7 @@ export class UserMessageQueue implements RabbitLifecycleListenerInterface {
         if (this.subscribeSocket)
             this.subscribeSocket.close();
 
-        return Promise.resolve<void>();
+        return Promise.resolve<void>(undefined);
     }
 
     private subscribeAll(): Promise<void>[] {

@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "fs": "0.0.2",
-    "path": "^0.11.14",
+    "path": "^0.12.7",
     "rabbit.js": "^0.4.4",
     "typedi": "~0.2.0"
   },
@@ -42,6 +42,6 @@
     "tslint": "^3.3.0",
     "tslint-stylish": "^2.1.0-beta",
     "typescript": "^1.8.0",
-    "typings": "^0.6.6"
+    "typings": "^0.7.7"
   }
 }
